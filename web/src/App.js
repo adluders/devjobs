@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+import { Switch, Route } from "react-router";
+import Detail from "./components/Detail";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import { ThemeContext } from "./context/ThemeContext";
 
-function App() {
+const App = () => {
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${darkMode ? "dark" : "light"}`}>
+      <Header />
+      <div className="container">
+        {
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/:slug" component={Detail} exact />
+          </Switch>
+        }
+      </div>
     </div>
   );
-}
+};
 
 export default App;
